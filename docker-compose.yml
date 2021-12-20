@@ -1,0 +1,75 @@
+version: '3.3'
+
+services:
+  proxy:
+    build: ./services/proxy
+    container_name: nginx
+    restart: unless-stopped
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./services/proxy/conf/nginx.conf:/etc/nginx/nginx.conf
+      - ./services/proxy/certs:/etc/nginx/certs
+    depends_on:
+      - wordpress
+
+  wordpress:
+    build: ./services/wordpress
+    container_name: wordpress
+    restart: unless-stopped
+    depends_on:
+      - db
+    ports:
+      - 8080:80
+    env_file: .env
+    environment:
+      - WORDPRESS_DB_HOST=$WORDPRESS_DB_HOST
+      - WORDPRESS_DB_USER=$MYSQL_USER
+      - WORDPRESS_DB_PASSWORD=$MYSQL_PASSWORD
+      - WORDPRESS_DB_NAME=$MYSQL_DATABASE
+      - WORDPRESS_DOMAIN_CURRENT_SITE=$CURRENT_SITE
+      - WORDPRESS_DEBUG=$FALSE
+      - WORDPRESS_ALLOW_UNFILTERED_UPLOADS=$TRUE
+      - WORDPRESS_SUBDOMAIN_INSTALL=$TRUE
+      - WORDPRESS_ALLOW_MULTISITE=$TRUE
+    extra_hosts:
+      - "react-dev.wp.wellnessliving.local:127.0.0.1"
+      - "react-dev1.wp.wellnessliving.local:127.0.0.1"
+      - "react-dev2.wp.wellnessliving.local:127.0.0.1"
+      - "react-dev3.wp.wellnessliving.local:127.0.0.1"
+    volumes:
+      - ./project/wp-multisite:/var/www/html
+      - ./project/react4multisite/build:/var/www/html/wp-content/themes/constructor_wl/build
+      - ./services/proxy/ini/custom.ini:/usr/local/etc/php/conf.d/custom.ini
+      - ./services/proxy/vhost/vhost.conf:/etc/apache2/sites-enabled/000-default.conf
+
+  db:
+    build: ./services/mysql
+    container_name: mysql
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      - MYSQL_DATABASE=$MYSQL_DATABASE
+      - MYSQL_USER=$MYSQL_USER
+      - MYSQL_PASSWORD=$MYSQL_PASSWORD
+      - MYSQL_RANDOM_ROOT_PASSWORD=$MYSQL_RANDOM_ROOT_PASSWORD
+    volumes:
+      - ./dbfile:/var/lib/mysql
+      - ./services/mysql/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+    command: '--default-authentication-plugin=mysql_native_password'
+  
+  phpmyadmin:
+    build: ./services/phpmyadmin
+    container_name: phpmyadmin
+    depends_on:
+      - db
+    restart: unless-stopped
+    environment:
+      - PMA_ARBITRARY=1
+    ports:
+      - 8081:80
+
+volumes:
+  wordpress:
+  db:

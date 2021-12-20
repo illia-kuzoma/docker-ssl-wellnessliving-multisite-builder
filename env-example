@@ -1,0 +1,9 @@
+WORDPRESS_DB_HOST=db
+MYSQL_ROOT_PASSWORD=root
+MYSQL_DATABASE=react4multisite
+MYSQL_USER=react
+MYSQL_PASSWORD=react4multisite
+MYSQL_RANDOM_ROOT_PASSWORD='1'
+CURRENT_SITE=react-dev.wp.wellnessliving.local
+TRUE=true
+FALSE=false
