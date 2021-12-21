@@ -1,0 +1,5 @@
+dbfile/*
+.env
+.idea
+.DS_Store
+project/*

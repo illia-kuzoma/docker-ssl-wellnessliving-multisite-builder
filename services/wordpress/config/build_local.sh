@@ -9,4 +9,5 @@ npm i
 npm run build
 ./node_modules/.bin/gulp minWlSdk
 
-ln -s $JS_HOME_DIR/build/ $WP_ROOT_DIR/wp-content/themes/constructor_wl/build
+rm -rf $WP_ROOT_DIR/wp-content/themes/constructor_wl/build
+cp -r $JS_HOME_DIR/build/ $WP_ROOT_DIR/wp-content/themes/constructor_wl/build

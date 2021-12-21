@@ -46,6 +46,7 @@ services:
 
   db:
     build: ./services/mysql
+    platform: linux/x86_64
     container_name: mysql
     restart: unless-stopped
     env_file: .env
