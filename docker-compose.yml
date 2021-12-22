@@ -46,7 +46,7 @@ services:
 
   db:
     build: ./services/mysql
-    platform: linux/x86_64
+#    platform: linux/x86_64 // uncomment for MacOs
     container_name: multisite_mysql
     restart: unless-stopped
     env_file: .env
