@@ -3,7 +3,7 @@ version: '3.3'
 services:
   proxy:
     build: ./services/proxy
-    container_name: nginx
+    container_name: multisite_proxy
     restart: unless-stopped
     ports:
       - 80:80
@@ -16,7 +16,7 @@ services:
 
   wordpress:
     build: ./services/wordpress
-    container_name: wordpress
+    container_name: multisite_wordpress
     restart: unless-stopped
     depends_on:
       - db
@@ -47,7 +47,7 @@ services:
   db:
     build: ./services/mysql
     platform: linux/x86_64
-    container_name: mysql
+    container_name: multisite_mysql
     restart: unless-stopped
     env_file: .env
     environment:
@@ -62,7 +62,7 @@ services:
   
   phpmyadmin:
     build: ./services/phpmyadmin
-    container_name: phpmyadmin
+    container_name: multisite_phpmyadmin
     depends_on:
       - db
     restart: unless-stopped

@@ -8,14 +8,14 @@
 ### Git WordPress
 - `git clone git@github.com:wellnessliving/wp-multisite.git ./project/wp-multisite`
 - `git checkout development`
-- `mv ./services/wordpress/config/wp-config.php ./project/wp-multisite`
-- `cp ./services/wordpress/config/htaccess-example .htaccess`
-- `mv ./services/wordpress/config/.htaccess ./project/wp-multisite`
+- `cp services/wordpress/config/wp-config.php project/wp-multisite`
+- `cp services/wordpress/config/htaccess-example project/wp-multisite.htaccess`
+- `cp services/wordpress/config/.htaccess ./project/wp-multisite`
 
 ### Git React
 - `git clone git@github.com:wellnessliving/react4multisite.git ./project/react4multisite`
 - `git checkout development`
-- `mv /services/wordpress/config/build_local.sh ./project/react4multisite/dev_build`
+- `cp /services/wordpress/config/build_local.sh project/react4multisite/dev_build`
 - `cd react4multisite/dev_build`
 - `bash build_local.sh`
 
